@@ -24,7 +24,7 @@ const getNotes = async ()=>{
     },
   });
   const allNotes =await response.json();
-  console.log(allNotes);
+  
   setNotes(allNotes);
   }catch (error) {
     console.error('Error:', error.message);
@@ -43,7 +43,7 @@ const addNote = async (title, description, tag)=>{
     },
   });
   const note = await response.json();
-  console.log("adding new note");
+ 
  
   setNotes(notes.concat(note))
 }
@@ -63,8 +63,6 @@ const deleteNote = async (id)=>{
   }
   await response.json();
   
- 
-  console.log("deleting note id " + id);
   const newNote = await notes.filter((note)=>{return note._id!==id}) 
   setNotes(newNote);
 }catch (error) {
