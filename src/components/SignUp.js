@@ -1,14 +1,23 @@
-import React, {useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
+import AlertContext from '../context/alerts/AlertContext'
 
-export default function SignUp(props) {
+export default function SignUp() {
+  const alertContext = useContext(AlertContext)
+  const {displayAlert, clearAlert} = alertContext;
   const [credential, setCredential] = useState({email: "" , password: "", name: "", cpassword: ""})
   const navigate  = useNavigate();
  
   
   const HandleSignup = async (e) => {
     e.preventDefault();
-   const  {name, email,password} = credential;
+   const  {name, email,password, cpassword} = credential;
+
+   // Check if password and confirm password match
+   if (password !== cpassword) {
+  displayAlert("warning", "Passwords do not match");
+  return; // Stop further execution if passwords don't match
+}
     
     const response = await fetch(`http://localhost:5000/api/auth/createUser`, {
       method: "POST",
@@ -29,17 +38,33 @@ export default function SignUp(props) {
       localStorage.setItem('token', json.token);
       console.log(json.token);
       navigate("/login.js");
-      props.displayAlert("success", "Account created successfully" );
+       displayAlert("success", "Account created successfully" );
     } 
    else{
     setCredential({email: "" , password: "", name: "", cpassword: ""});
-    props.displayAlert("danger","Invalid credential" );
+     displayAlert("danger","Invalid credential" );
    }
   
   };
   const ochange =(e) =>{
     setCredential({...credential, [e.target.name]:e.target.value });
   }
+  const HandleClear = (e)=>{
+    e.preventDefault();
+    setCredential({email: "" , password: "", cpassword: "", name: ""});
+    
+    displayAlert("success","Credential has been cleared successfully" );
+
+  }
+  // Use effect to handle password validation and alert
+  useEffect(() => {
+    if (credential.password.length > 0 && credential.password.length < 8 ) {
+      displayAlert("info", "Password must be  at least 8 characters.");
+    } else if (credential.password.length >= 8) {
+      clearAlert();
+    }
+  }, [credential.password, displayAlert, clearAlert]);
+
 
   return (
     <>
@@ -89,7 +114,7 @@ export default function SignUp(props) {
             type="password"
             className="form-control"
             id="cpassword"
-            name="cpassword" onChange={ochange} value={credential.password}
+            name="cpassword" onChange={ochange} value={credential.cpassword}
             required
           />
         </div>
@@ -101,6 +126,14 @@ export default function SignUp(props) {
           
         >
           Signup
+        </button>
+        <button
+        disabled={credential.email.length===0 || credential.password.length<8}
+          type="clear"
+          className="btn btn-primary mx-3"
+          onClick={HandleClear}
+        >
+          Clear
         </button>
       </form>
     </>

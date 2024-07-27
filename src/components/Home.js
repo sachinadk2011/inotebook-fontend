@@ -3,13 +3,13 @@ import Notes from "./Notes"
 
 
 
-function Home(props) {
+function Home() {
   
   return (
     <>
     <div className='container'>
       
-    <Notes displayAlert={props.displayAlert}/>
+    <Notes />
     </div>
     </>
   )

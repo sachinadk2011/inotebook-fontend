@@ -1,4 +1,6 @@
 
+
+import AlertState from '../alerts/AlertState';
 import NoteContext from './NoteContext'
 import { useState } from 'react'
 
@@ -110,9 +112,13 @@ const editNote = async (id, title, description, tag)=>{
   }
 }
   return (
+    <AlertState>
+
     <NoteContext.Provider value={{notes, addNote, deleteNote,editNote, getNotes}}>
         {props.children}
     </NoteContext.Provider>
+    </AlertState>
+   
   )
 }
 

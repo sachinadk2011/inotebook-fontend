@@ -1,20 +1,43 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import NoteContext from '../context/notes/NoteContext'
+import AlertContext from '../context/alerts/AlertContext'
 
-export default function AddNote(props) {
+export default function AddNote() {
     const context = useContext(NoteContext)
-  const {addNote} = context;
+    const {addNote} = context;
+    const alertContext = useContext(AlertContext)
+    const {displayAlert, clearAlert} = alertContext;
   const [note, setNote] = useState({title: "", description:"", tag:"" })
 
   const addingNotes = (e)=>{
     e.preventDefault();
     addNote(note.title, note.description, note.tag);
-    props.displayAlert("success","Note added successfully" )
+    displayAlert("success","Note added successfully" )
+    
     setNote({title: "", description:"", tag:"" });
   }
   const ochange =(e) =>{
     setNote({...note, [e.target.name]:e.target.value });
   }
+  const HandleClear = (e)=>{
+    e.preventDefault();
+    setNote({title: "", description:"", tag:"" });
+    displayAlert("success","Detail of notes has been cleared successfully" );
+
+  }
+   // Use effect to handle password validation and alert
+   useEffect(() => { if ((note.description.length > 0 && note.description.length < 5) && 
+    (note.title.length > 0 && note.title.length < 5)) {
+displayAlert("info", "Description and Title must be at least 5 characters.");
+}
+    else if (note.description.length > 0 && note.description.length < 5) {
+      displayAlert("info", "Description must be at least 5 characters.");
+    } else if (note.title.length > 0 && note.title.length < 5) {
+      displayAlert("info", "Title must be at least 5 characters.");
+    } else if (note.description.length >= 5 || note.title.length >= 5) {
+      clearAlert();
+    }
+  }, [note.description,note.title, displayAlert, clearAlert]);
   return (
     <div>
     <h2 className="container my-3">Add Note </h2>
@@ -33,7 +56,15 @@ export default function AddNote(props) {
   <input type="text" className="form-control" id="tag" name="tag" value={note.tag} onChange={ochange} />
 </div>
 
-<button disabled={note.title.length<5 || note.description.length<=5} type="submit" className="btn btn-primary" onClick={addingNotes}> Add</button>
+<button disabled={note.title.length<5 || note.description.length<5} type="submit" className="btn btn-primary" onClick={addingNotes}> Add</button>
+<button
+        disabled={note.title.length<5 || note.description.length<5}
+          type="clear"
+          className="btn btn-primary mx-3"
+          onClick={HandleClear}
+        >
+          Clear
+        </button>
 </form>
 </div>
   )

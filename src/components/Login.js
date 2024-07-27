@@ -1,8 +1,11 @@
-import React, {useState} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
+import AlertContext from '../context/alerts/AlertContext'
 
 
-export default function Login(props) {
+export default function Login() {
+  const alertContext = useContext(AlertContext)
+  const {displayAlert, clearAlert} = alertContext;
   const [credential, setCredential] = useState({email: "" , password: ""})
   const navigate  = useNavigate();
  
@@ -27,25 +30,40 @@ export default function Login(props) {
       localStorage.setItem('token', json.token);
       console.log(json.token);
       navigate("/");
-      props.displayAlert("success","Login successful");
+      displayAlert("success","Login successful");
     }else{
 
       
-    props.displayAlert("danger","Invalid credential");
+    displayAlert("danger","Invalid credential");
     }
     
   
   };
+  const HandleClear = (e)=>{
+    e.preventDefault();
+    setCredential({email: "" , password: ""});
+    displayAlert("success","Credential has been cleared successfully" );
+
+  }
   const ochange =(e) =>{
     const {name, value} = e.target
     setCredential({...credential, [name]:value });
     
+    
   }
+  // Use effect to handle password validation and alert
+  useEffect(() => {
+    if (credential.password.length > 0 && credential.password.length < 8) {
+      displayAlert("info", "Password must be  at least 8 characters.");
+    } else if (credential.password.length >= 8) {
+      clearAlert();
+    }
+  }, [credential.password, displayAlert, clearAlert]);
 
   return (
     <>
       <h2 className="container my-3">Login to connect Inotebook</h2>
-      <form className="container " onSubmit={HandleSignup}>
+      <form className="container " onSubmit={HandleSignup} >
         
         <div className="mb-3 ">
           <label htmlFor="email" className="form-label">
@@ -83,10 +101,18 @@ export default function Login(props) {
         <button
         disabled={credential.email.length===0 || credential.password.length<8}
           type="submit"
-          className="btn btn-primary "
+          className="btn btn-primary  "
           
         >
           Login
+        </button>
+        <button
+        disabled={credential.email.length===0 || credential.password.length<8}
+          type="clear"
+          className="btn btn-primary mx-3"
+          onClick={HandleClear}
+        >
+          Clear
         </button>
       </form>
     </>

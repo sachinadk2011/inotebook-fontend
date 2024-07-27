@@ -3,13 +3,16 @@ import Notesitem from "./Notesitem";
 import AddNote from "./AddNote";
 import NoteContext from "../context/notes/NoteContext";
 import { useNavigate } from "react-router-dom";
+import AlertContext from '../context/alerts/AlertContext'
 
-export default function Notes(props) {
+export default function Notes() {
   const context = useContext(NoteContext);
   const { notes, getNotes,editNote } = context;
+  const alertContext = useContext(AlertContext)
+  const {displayAlert} = alertContext;
   const [note, setNote] = useState({id : " ", title: "", description:"", tag:"default" })
   const navigate  = useNavigate();
-  
+  const protectId = note.id;
  
   const ochange =(e) =>{
     setNote({...note, [e.target.name]:e.target.value });
@@ -38,12 +41,19 @@ export default function Notes(props) {
   const handleUpdate = ()=>{
     editNote(note.id, note.title, note.description, note.tag);
     refClose.current.click();
-    props.displayAlert("success","Note updated successfully" )
+    displayAlert("success","Note updated successfully" )
+  }
+  const HandleClear = (e)=>{
+    e.preventDefault();
+    setNote({ id:protectId, title: "", description:"", tag:"" });
+    
+    displayAlert("success","Detail of notes has been cleared successfully" );
+
   }
 
   return (
     <>
-      <AddNote displayAlert={props.displayAlert} />
+      <AddNote  />
       {/* Button trigger modal */}
       <button
         ref={ref}
@@ -133,6 +143,14 @@ export default function Notes(props) {
               >
                 Close
               </button>
+              <button
+        disabled={note.title.length<5 || note.description.length<=5}
+          type="reset"
+          className="btn btn-primary mx-3"
+          onClick={HandleClear}
+        >
+          Clear
+        </button>
               <button disabled={note.title.length<5 || note.description.length<=5} type="button" className="btn btn-primary" onClick={handleUpdate}>
                 Save Changes
               </button>
@@ -148,7 +166,7 @@ export default function Notes(props) {
         </div>
         {notes.map((note) => {
           return (
-            <Notesitem key={note._id} displayAlert={props.displayAlert} updateNote={updateNote} note={note} />
+            <Notesitem key={note._id}  updateNote={updateNote} note={note} />
           );
         })}
       </div>

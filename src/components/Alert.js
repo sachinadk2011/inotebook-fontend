@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
+import AlertContext from '../context/alerts/AlertContext'
 
-function Alert(props) {
+
+function Alert( ) {
+  
+  const {alert} = useContext(AlertContext);
   const capitalization =(string)=>{
     return string.charAt(0).toUpperCase()+string.slice(1).toLowerCase();
   }
   return (
     <div style={{height : '50px'}}>
-   { props.alert && <div className={`alert alert-${props.alert.type}`} role="alert" >
+   {  alert && <div className={`alert alert-${ alert.type}`} role="alert" >
       
-  <strong>{capitalization( props.alert.type === "danger"? "error": props.alert.type)} !</strong> {props.alert.msg}
+  <strong>{capitalization(  alert.type === "danger"? "error":  alert.type)} !</strong> { alert.msg}
   
 </div>}
 </div>
@@ -19,7 +23,7 @@ Alert.propTypes = {
     type : PropTypes.string,
     msg : PropTypes.string
 }
-Alert.defaultProps = {
+Alert.default  = {
     type : "success",
     msg : "Note is added" 
 }

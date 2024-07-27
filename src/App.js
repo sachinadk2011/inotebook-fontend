@@ -14,30 +14,19 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 
 function App() {
-  const [alert, setAlert] = useState(null)
-  const displayAlert = (types, msg)=>{
-    setAlert({
-      msg: msg,
-      type: types
-    })
-   
-    setTimeout(()=>{
-      setAlert(null);
-    }, 3000);
-  
-  }
+
   return (
     <>
     <NoteState>
     <Router>
     <Navbar />
-    <Alert alert={alert}  />
+    <Alert />
    <Routes >
 
-        <Route exact path="/" element={ <Home displayAlert={displayAlert} />} />   
+        <Route exact path="/" element={ <Home />} />   
         <Route exact path="/about.js" element={<About  />} />
-        <Route exact path="/login.js" element={<Login  displayAlert={displayAlert} />} />
-        <Route exact path="/signUp.js" element={<SignUp displayAlert={displayAlert}  />} />
+        <Route exact path="/login.js" element={<Login  />} />
+        <Route exact path="/signUp.js" element={<SignUp  />} />
 
       </Routes>  
       
