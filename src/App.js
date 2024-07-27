@@ -1,5 +1,5 @@
 import './App.css';
-import React/* , {useState} */ from 'react'
+import React, {useState} from 'react'
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,30 +10,37 @@ import { About } from './components/About';
 import Home from './components/Home';
 import { NoteState } from './context/notes/NoteState';
 import Alert from './components/Alert';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
 
 function App() {
-  /* const [alert, setAlert] = useState(null)
+  const [alert, setAlert] = useState(null)
   const displayAlert = (types, msg)=>{
     setAlert({
       msg: msg,
       type: types
     })
+   
     setTimeout(()=>{
       setAlert(null);
-    })
-  } */
+    }, 3000);
+  
+  }
   return (
     <>
     <NoteState>
     <Router>
     <Navbar />
-    <Alert /* alert={alert} */ /* displayAlert={displayAlert}  *//>
+    <Alert alert={alert}  />
    <Routes >
-          <Route exact path="/about.js" element={<About  />} />
-             
-          <Route exact path="/" element={ <Home /* displayAlert={displayAlert}  *//>} />   
-        
+
+        <Route exact path="/" element={ <Home displayAlert={displayAlert} />} />   
+        <Route exact path="/about.js" element={<About  />} />
+        <Route exact path="/login.js" element={<Login  displayAlert={displayAlert} />} />
+        <Route exact path="/signUp.js" element={<SignUp displayAlert={displayAlert}  />} />
+
       </Routes>  
+      
     </Router>
     </NoteState>
     </>
