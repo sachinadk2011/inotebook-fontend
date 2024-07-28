@@ -103,9 +103,9 @@ const editNote = async (id, title, description, tag)=>{
       newNotes[index].title = title;
       newNotes[index].description = description;
       newNotes[index].tag = tag;
+      setNotes(newNotes);
       break;
     }
-    setNotes(newNotes)
   }}catch (error) {
     console.error('Error:', error.message);
     // Handle the error appropriately in your UI
