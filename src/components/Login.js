@@ -28,12 +28,11 @@ export default function Login() {
     if(json.success){
       // Save the auth token and redirect
       localStorage.setItem('token', json.token);
-      console.log(json.token);
+      
       navigate("/");
       displayAlert("success","Login successful");
     }else{
-
-      
+      setCredential({email , password: ""});
     displayAlert("danger","Invalid credential");
     }
     
