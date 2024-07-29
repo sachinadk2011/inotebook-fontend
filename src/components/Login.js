@@ -54,7 +54,7 @@ export default function Login() {
   useEffect(() => {
     if (credential.password.length > 0 && credential.password.length < 8) {
       displayAlert("info", "Password must be  at least 8 characters.");
-    } else if (credential.password.length >= 8) {
+    } else  {
       clearAlert();
     }
   }, [credential.password, displayAlert, clearAlert]);
