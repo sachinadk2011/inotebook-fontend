@@ -13,8 +13,8 @@ export default function Login() {
   const HandleSignup = async (e) => {
     e.preventDefault();
    const  { email,password} = credential;
-    
-    const response = await fetch(`http://localhost:5000/api/auth/login`, {
+    const port = process.env.REACT_APP_PORT;
+    const response = await fetch(`http://localhost:${port}/api/auth/login`, {
       method: "POST",
     
       headers: {
@@ -24,13 +24,13 @@ export default function Login() {
     });
     const json = await response.json();
 
-    console.log(json);
+    /* console.log(json); */
     if(json.success){
       // Save the auth token and redirect
       localStorage.setItem('token', json.token);
       
-      navigate("/");
       displayAlert("success","Login successful");
+      navigate("/");
     }else{
       setCredential({email , password: ""});
     displayAlert("danger","Invalid credential");

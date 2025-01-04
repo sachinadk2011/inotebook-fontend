@@ -18,8 +18,8 @@ export default function SignUp() {
   displayAlert("warning", "Passwords do not match");
   return; // Stop further execution if passwords don't match
 }
-    
-    const response = await fetch(`http://localhost:5000/api/auth/createUser`, {
+     const port = process.env.REACT_APP_PORT;
+     const response = await fetch(`http://localhost:${port}/api/auth/createUser`, {
       method: "POST",
     
       headers: {
@@ -28,7 +28,7 @@ export default function SignUp() {
       body: JSON.stringify( {name, email,password}),
     });
     const json = await response.json();
-    console.log(json);
+   /*  console.log(json); */
 
     /* if (!response.ok) {
       // Handle errors from the backend
@@ -36,9 +36,9 @@ export default function SignUp() {
     }  */ if (json.success) {
       // Save the auth token and redirect
       localStorage.setItem('token', json.token);
-      console.log(json.token);
+      /* console.log(json.token); */
       navigate("/login.js");
-       displayAlert("success", "Account created successfully" );
+      displayAlert("success", "Account created successfully" );
     } 
    else{
     setCredential({email: "" , password: "", name: "", cpassword: ""});

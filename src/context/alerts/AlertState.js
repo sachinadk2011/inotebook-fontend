@@ -11,12 +11,12 @@ export default function AlertState(props) {
       if(types !== 'info')
       setTimeout(()=>{
         setAlert(null);
-      }, 3000);
+      }, 5000);
     }
     const clearAlert = ()=>{
         setTimeout(()=>{
             setAlert(null);
-          }, 100);
+          }, 1000);
     }
   return (
     <AlertContext.Provider value={{alert,displayAlert, clearAlert}}>
