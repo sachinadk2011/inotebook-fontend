@@ -1,18 +1,29 @@
 import React, { useContext } from 'react'
 import AlertContext from '../context/alerts/AlertContext'
 
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link,  useLocation,  useNavigate } from "react-router-dom";
+import NoteContext from '../context/notes/NoteContext';
+
 
 function Navbar() {
   const alertContext = useContext(AlertContext)
   const {displayAlert} = alertContext;
   const navigate  = useNavigate();
+  const { user, setUser } = useContext(NoteContext);
+  
   const handleLogout = ()=>{
     localStorage.removeItem('token');
+    setUser({ name: "", email: "" });
+  localStorage.removeItem('user');
     displayAlert("success" , "logout Successfully");
     navigate('/login.js');
   }
+  const handleDelete = ()=>{
+    displayAlert("success" , "Account Deleted successfully");
+
+  }
   let location = useLocation();
+  console.log(user?.email, user?.name);
   return (
     <>
     <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark" >
@@ -38,9 +49,18 @@ function Navbar() {
             </Link>
             <Link  className="btn btn-primary mx-1" tabIndex="-1" to="signUp.js" role="button">
               SignUp
-            </Link></form> : <button  className="btn btn-primary mx-1" onClick={handleLogout} >
+            </Link>
+            </form> : 
+            <>
+            <span className='text-body-secondary mx-10'>Welcome, {user?.name}, {user?.email}</span>
+            <button  className="btn btn-primary mx-1" onClick={handleLogout} >
               LogOut
-            </button>}
+            </button>
+             <button  className="btn btn-primary mx-1" onClick={handleDelete} >
+              Delete Account
+            </button>
+            </>
+            }
       
     </div>
   </div>

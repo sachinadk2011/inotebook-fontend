@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.7.9",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1",
@@ -21,7 +22,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-backend": "npm run --prefix ../inotebook-backend start",
+    "start-backend": "npm run --prefix ../inotebook-backend dev",
     "both": "concurrently \"npm start\" \"npm run start-backend\""
   },
   "eslintConfig": {

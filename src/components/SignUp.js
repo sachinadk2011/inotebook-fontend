@@ -1,12 +1,16 @@
 import React, {useContext, useState, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import AlertContext from '../context/alerts/AlertContext'
+import NoteContext from "../context/notes/NoteContext";
+
+
 
 export default function SignUp() {
   const alertContext = useContext(AlertContext)
   const {displayAlert, clearAlert} = alertContext;
   const [credential, setCredential] = useState({email: "" , password: "", name: "", cpassword: ""})
   const navigate  = useNavigate();
+  const {setUser} = useContext(NoteContext);
  
   
   const HandleSignup = async (e) => {
@@ -35,14 +39,16 @@ export default function SignUp() {
       throw new Error(json.error || "Failed to create user");
     }  */ if (json.success) {
       // Save the auth token and redirect
-      localStorage.setItem('token', json.token);
+      /* localStorage.setItem('token', json.token); */
       /* console.log(json.token); */
-      navigate("/login.js");
-      displayAlert("success", "Account created successfully" );
+      setUser({ name, email });  // Set both name and email on sign up
+      localStorage.setItem('user', JSON.stringify({ name, email }));  // Persist user data in localStorage
+      displayAlert("success", "Verification Code is sent succefully" );
+      navigate("/verifyotp.js");
     } 
    else{
     setCredential({email: "" , password: "", name: "", cpassword: ""});
-     displayAlert("danger","Invalid credential" );
+     displayAlert("danger","Sorry a user with this email already exists" );
    }
   
   };
@@ -127,6 +133,9 @@ export default function SignUp() {
         >
           Signup
         </button>
+        
+                   
+
         <button
         disabled={credential.email.length===0 || credential.password.length<8}
           type="clear"
@@ -135,6 +144,7 @@ export default function SignUp() {
         >
           Clear
         </button>
+        
       </form>
     </>
   );

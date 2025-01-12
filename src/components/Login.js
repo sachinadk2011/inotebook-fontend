@@ -1,6 +1,9 @@
 import React, {useContext, useState, useEffect} from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AlertContext from '../context/alerts/AlertContext'
+import NoteContext from '../context/notes/NoteContext';
+
+
 
 
 export default function Login() {
@@ -8,6 +11,7 @@ export default function Login() {
   const {displayAlert, clearAlert} = alertContext;
   const [credential, setCredential] = useState({email: "" , password: ""})
   const navigate  = useNavigate();
+  const {setUser} = useContext(NoteContext);
  
   
   const HandleSignup = async (e) => {
@@ -26,6 +30,8 @@ export default function Login() {
 
     /* console.log(json); */
     if(json.success){
+      setUser({ name: json.name, email });  // Set both name and email on sign up
+      localStorage.setItem('user', JSON.stringify({ name: json.name, email }));  // Persist user data in localStorage
       // Save the auth token and redirect
       localStorage.setItem('token', json.token);
       
@@ -95,7 +101,12 @@ export default function Login() {
             required
           />
         </div>
-        
+        <div><Link className="btn btn-link " to="/forgetpw" role="button">
+          <h6  style={{marginTop: "-25px", fontSize: "13px"}}>
+            Forget Password ?
+            </h6>
+            </Link>
+        </div>
 
         <button
         disabled={credential.email.length===0 || credential.password.length<8}

@@ -12,6 +12,8 @@ import { NoteState } from './context/notes/NoteState';
 import Alert from './components/Alert';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import VerifyOtp from './components/VerifyOtp';
+import ForgetPassword from './components/ForgetPassword';
 
 function App() {
 
@@ -27,6 +29,9 @@ function App() {
         <Route exact path="/about.js" element={<About  />} />
         <Route exact path="/login.js" element={<Login  />} />
         <Route exact path="/signUp.js" element={<SignUp  />} />
+        <Route exact path="/verifyotp.js" element={<VerifyOtp />} />
+        <Route exact path="/forgetpw" element={<ForgetPassword />} />
+        
 
       </Routes>  
       

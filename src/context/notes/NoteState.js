@@ -1,5 +1,5 @@
 
-
+import React, {useEffect} from "react";
 import AlertState from '../alerts/AlertState';
 import NoteContext from './NoteContext'
 import { useState } from 'react'
@@ -10,7 +10,16 @@ export const NoteState = (props) => {
   const host = `http://localhost:${port}`;
     const noteIntialize = []
     const [notes, setNotes] = useState(noteIntialize);
-    
+    const [user, setUser] = useState(() => {
+      const storedUser = localStorage.getItem('user');
+      return storedUser ? JSON.parse(storedUser) : { name: "", email: "" }; // Initialize with localStorage data if available
+    });
+    useEffect(() => {
+      if (user) {
+        localStorage.setItem('user', JSON.stringify(user));
+      }
+    }, [user]);  // Run when `user` state changes
+        
 
 
 
@@ -115,7 +124,7 @@ const editNote = async (id, title, description, tag)=>{
   return (
     <AlertState>
 
-    <NoteContext.Provider value={{notes, addNote, deleteNote,editNote, getNotes}}>
+    <NoteContext.Provider value={{notes, user, setUser,addNote, deleteNote,editNote, getNotes}}>
         {props.children}
     </NoteContext.Provider>
     </AlertState>
