@@ -22,7 +22,7 @@ export default function VerifyOtp() {
     e.preventDefault();
     
      const port = process.env.REACT_APP_URL;
-     const response = await fetch(` ${port}/api/auth/verify-otp`, {
+     const response = await fetch(`${port}/api/auth/verify-otp`, {
       method: "POST",
     
       headers: {
@@ -66,7 +66,7 @@ export default function VerifyOtp() {
     e.preventDefault();
 
     const port = process.env.REACT_APP_URL;
-     const response = await fetch(` ${port}/api/auth/resend`, {
+     const response = await fetch(`${port}/api/auth/resend`, {
       method: "POST",
     
       headers: {
