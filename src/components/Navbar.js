@@ -16,7 +16,7 @@ function Navbar() {
     setUser({ name: "", email: "" });
   localStorage.removeItem('user');
     displayAlert("success" , "logout Successfully");
-    navigate('/login.js');
+    navigate('/login');
   }
   const handleDelete = ()=>{
     displayAlert("success" , "Account Deleted successfully");
@@ -38,16 +38,16 @@ function Navbar() {
           <Link className={`nav-link ${location.pathname==="/"?"active":""} `} aria-current="page" to="/">Home</Link>
         </li>
         <li className="nav-item">
-          <Link className={`nav-link ${location.pathname==="/about.js"?"active":""} `} to="/about.js">About</Link>
+          <Link className={`nav-link ${location.pathname==="/about"?"active":""} `} to="/about">About</Link>
         </li>
         
        
       </ul>
       {!localStorage.getItem('token')? <form className="d-flex" role='button'>
-             <Link  className="btn btn-primary mx-2 " tabIndex="-1" to="/login.js" role="button">
+             <Link  className="btn btn-primary mx-2 " tabIndex="-1" to="/login" role="button">
               Login
             </Link>
-            <Link  className="btn btn-primary mx-1" tabIndex="-1" to="signUp.js" role="button">
+            <Link  className="btn btn-primary mx-1" tabIndex="-1" to="signUp" role="button">
               SignUp
             </Link>
             </form> : 

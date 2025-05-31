@@ -26,10 +26,10 @@ function App() {
    <Routes >
 
         <Route exact path="/" element={ <Home />} />   
-        <Route exact path="/about.js" element={<About  />} />
-        <Route exact path="/login.js" element={<Login  />} />
-        <Route exact path="/signUp.js" element={<SignUp  />} />
-        <Route exact path="/verifyotp.js" element={<VerifyOtp />} />
+        <Route exact path="/about" element={<About  />} />
+        <Route exact path="/login" element={<Login  />} />
+        <Route exact path="/signUp" element={<SignUp  />} />
+        <Route exact path="/verifyotp" element={<VerifyOtp />} />
         <Route exact path="/forgetpw" element={<ForgetPassword />} />
         
 

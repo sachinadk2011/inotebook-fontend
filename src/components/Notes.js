@@ -21,7 +21,7 @@ export default function Notes() {
     if(localStorage.getItem('token')){
     getNotes();
   }else{
-    navigate('/login.js')
+    navigate('/login')
   }
     // eslint-disable-next-line
   }, []);

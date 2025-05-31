@@ -47,7 +47,7 @@ export default function VerifyOtp() {
       /* console.log(json.token); */
       
       if (name !== "1") {
-        navigate("/login.js");
+        navigate("/login");
       } else {
         setUser({ name: "1" }); // Update user context
         localStorage.setItem("user", JSON.stringify({ name: "1" })); // Store in localStorage

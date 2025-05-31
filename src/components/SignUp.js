@@ -44,7 +44,7 @@ export default function SignUp() {
       setUser({ name, email });  // Set both name and email on sign up
       localStorage.setItem('user', JSON.stringify({ name, email }));  // Persist user data in localStorage
       displayAlert("success", "Verification Code is sent succefully" );
-      navigate("/verifyotp.js");
+      navigate("/verifyotp");
     } 
    else{
     setCredential({email: "" , password: "", name: "", cpassword: ""});
