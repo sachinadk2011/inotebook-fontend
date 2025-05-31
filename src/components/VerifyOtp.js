@@ -21,8 +21,8 @@ export default function VerifyOtp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-     const port = process.env.REACT_APP_PORT;
-     const response = await fetch(`http://localhost:${port}/api/auth/verify-otp`, {
+     const port = process.env.REACT_APP_URL;
+     const response = await fetch(` ${port}/api/auth/verify-otp`, {
       method: "POST",
     
       headers: {
@@ -65,8 +65,8 @@ export default function VerifyOtp() {
   const resend = async (e)=> {
     e.preventDefault();
 
-    const port = process.env.REACT_APP_PORT;
-     const response = await fetch(`http://localhost:${port}/api/auth/resend`, {
+    const port = process.env.REACT_APP_URL;
+     const response = await fetch(` ${port}/api/auth/resend`, {
       method: "POST",
     
       headers: {

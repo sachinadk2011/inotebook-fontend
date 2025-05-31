@@ -22,8 +22,8 @@ export default function SignUp() {
   displayAlert("warning", "Passwords do not match");
   return; // Stop further execution if passwords don't match
 }
-     const port = process.env.REACT_APP_PORT;
-     const response = await fetch(`http://localhost:${port}/api/auth/createUser`, {
+     const port = process.env.REACT_APP_URL;
+     const response = await fetch(`${port}/api/auth/createUser`, {
       method: "POST",
     
       headers: {

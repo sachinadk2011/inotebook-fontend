@@ -17,8 +17,8 @@ export default function Login() {
   const HandleSignup = async (e) => {
     e.preventDefault();
    const  { email,password} = credential;
-    const port = process.env.REACT_APP_PORT;
-    const response = await fetch(`http://localhost:${port}/api/auth/login`, {
+    const port = process.env.REACT_APP_URL;
+    const response = await fetch(`${port}/api/auth/login`, {
       method: "POST",
     
       headers: {

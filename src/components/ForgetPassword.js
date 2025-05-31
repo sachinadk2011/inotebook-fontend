@@ -21,8 +21,8 @@ const name = user?.name;
         console.log(email, credential.email, "after this ");
 
         try {
-        const port = process.env.REACT_APP_PORT;
-        const response = await fetch(`http://localhost:${port}/api/auth/forget-password`, {
+        const port = process.env.REACT_APP_URL;
+        const response = await fetch(` ${port}/api/auth/forget-password`, {
             method: "POST",
             
             headers: {
@@ -54,7 +54,7 @@ localStorage.setItem('user', JSON.stringify({  email, name: "1" }));
     
     const handlePasswordChange = async () => {
         const { email, password,  cpassword } = credential;
-        const port = process.env.REACT_APP_PORT;
+        const port = process.env.REACT_APP_URL;
         
     
         // Check if password and confirm password match
@@ -63,7 +63,7 @@ localStorage.setItem('user', JSON.stringify({  email, name: "1" }));
   return; // Stop further execution if passwords don't match
 }
         try {
-          const response = await fetch(`http://localhost:${port}/api/auth/resetpw`, {
+          const response = await fetch(` ${port}/api/auth/resetpw`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password}),
