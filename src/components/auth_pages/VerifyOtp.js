@@ -10,7 +10,7 @@ export default function VerifyOtp() {
     const alertContext = useContext(AlertContext)
   const {displayAlert} = alertContext;
   const navigate  = useNavigate();
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState(" ");
   const {VerifyOtp, ResendOtp} = useContext(AuthContext)
   
   const { user, setUser } = useContext(NoteContext);
@@ -52,21 +52,23 @@ export default function VerifyOtp() {
           displayAlert("success", json.message );
         
       } catch (error) {
-        setOtp({OtpCode : ""});
+        setOtp("");
         displayAlert("danger", error.message);
       }
   
   };
   const resend = async (e)=> {
     e.preventDefault();
-
-    const json = ResendOtp(email)
+    try {
+    const json =await ResendOtp(email)
      
-    if (json.success) {
-      displayAlert("success", "Verification code has been sent successfully.");
-    } else {
-      displayAlert("danger", "Failed to resend the verification code.");
-    }
+    
+      displayAlert("success", json.message || "verification code sent successfully");
+    
+     } catch (error) {
+        
+        displayAlert("danger", error.message);
+      }
   }
   return (
     <>
