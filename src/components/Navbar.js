@@ -3,12 +3,14 @@ import AlertContext from "../context/alerts/AlertContext";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import NoteContext from "../context/notes/NoteContext";
+import AuthContext from "../context/authentication/AuthContext";
 
 function Navbar() {
   const alertContext = useContext(AlertContext);
   const { displayAlert } = alertContext;
-  const navigate = useNavigate();
   const { user, setUser } = useContext(NoteContext);
+  const {DeleteUser} = useContext(AuthContext)
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -17,11 +19,28 @@ function Navbar() {
     displayAlert("success", "logout Successfully");
     navigate("/login");
   };
-  const handleDelete = () => {
-    displayAlert("success", "Account Deleted successfully");
+  const handleDelete = async() => {
+    try {
+      
+      const json = DeleteUser()
+     if (json.success){
+    displayAlert("success", json.message);
+    navigate("/login");
+     }else{
+      displayAlert("danger",json.message)
+     }
+
+      
+    } catch (error) {
+      // console.error('Error:', error.message);
+      displayAlert("danger", error);
+      
+    }
+
+    
   };
   let location = useLocation();
-  /* console.log(user?.email, user?.name); */
+  
   return (
     <>
       <nav

@@ -1,7 +1,10 @@
 import React, {useContext, useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import AlertContext from '../context/alerts/AlertContext'
-import NoteContext from '../context/notes/NoteContext';
+// ✅ Correct import inside any auth_pages/*.js
+import AlertContext from "../../context/alerts/AlertContext";
+import NoteContext from "../../context/notes/NoteContext";
+import AuthContext from '../../context/authentication/AuthContext';
+
 
 
 
@@ -12,34 +15,40 @@ export default function Login() {
   const [credential, setCredential] = useState({email: "" , password: ""})
   const navigate  = useNavigate();
   const {setUser} = useContext(NoteContext);
+  const {Login, GetUser} = useContext(AuthContext)
  
   
   const HandleSignup = async (e) => {
     e.preventDefault();
    const  { email,password} = credential;
-    const port = process.env.REACT_APP_URL;
-    const response = await fetch(`${port}/api/auth/login`, {
-      method: "POST",
+   try {
     
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify( { email, password}),
-    });
-    const json = await response.json();
-
-    /* console.log(json); */
-    if(json.success){
-      setUser({ name: json.name, email });  // Set both name and email on sign up
-      localStorage.setItem('user', JSON.stringify({ name: json.name, email }));  // Persist user data in localStorage
-      // Save the auth token and redirect
-      localStorage.setItem('token', json.token);
-      
-      displayAlert("success","Login successful");
-      navigate("/");
-    }else{
-      setCredential({email , password: ""});
-    displayAlert("danger","Invalid credential");
+     const json = Login(email, password);
+     
+     
+     
+     /* console.log(json); */
+     if(json.success){
+       // Save the auth token and redirect
+       localStorage.setItem('token', json.token);
+       
+       
+       const userData = await GetUser();  // 🟢 Fetch full user info using token
+       
+       if (userData) {
+         setUser({ name: userData.name, email: userData.email });
+         localStorage.setItem('user', JSON.stringify({ name: userData.name, email: userData.email }));
+        }
+        
+        
+        displayAlert("success","Login successful");
+        navigate("/");
+      }else{
+        setCredential({email , password: ""});
+        displayAlert("danger",json.message);
+      }
+    } catch (error) {
+     displayAlert("danger", error);
     }
     
   

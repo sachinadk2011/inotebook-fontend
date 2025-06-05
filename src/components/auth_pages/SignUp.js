@@ -1,11 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AlertContext from "../context/alerts/AlertContext";
-import NoteContext from "../context/notes/NoteContext";
+// ✅ Correct import inside any auth_pages/*.js
+import AlertContext from "../../context/alerts/AlertContext";
+import NoteContext from "../../context/notes/NoteContext";
+import AuthContext from "../../context/authentication/AuthContext";
+
 
 export default function SignUp() {
   const alertContext = useContext(AlertContext);
   const { displayAlert, clearAlert } = alertContext;
+  const {SignUp} = useContext(AuthContext)
   const [credential, setCredential] = useState({
     email: "",
     password: "",
@@ -24,34 +28,25 @@ export default function SignUp() {
       displayAlert("warning", "Passwords do not match");
       return; // Stop further execution if passwords don't match
     }
-    const port = process.env.REACT_APP_URL;
-    const response = await fetch(`${port}/api/auth/createUser`, {
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, email, password }),
-    });
-    const json = await response.json();
-    /*  console.log(json); */
-
-    /* if (!response.ok) {
-      // Handle errors from the backend
-      throw new Error(json.error || "Failed to create user");
-    }  */ if (json.success) {
-      // Save the auth token and redirect
-      /* localStorage.setItem('token', json.token); */
-      /* console.log(json.token); */
-      setUser({ name, email }); // Set both name and email on sign up
-      localStorage.setItem("user", JSON.stringify({ name, email })); // Persist user data in localStorage
-      displayAlert("success", "Verification Code is sent succefully");
-      navigate("/verifyotp");
-    } else {
-      setCredential({ email: "", password: "", name: "", cpassword: "" });
-      displayAlert("danger", "Sorry a user with this email already exists");
+    try {
+      
+      const json = SignUp(name, email, password);
+      if (json.success) {
+        // Save the auth token and redirect
+        /* localStorage.setItem('token', json.token); */
+        /* console.log(json.token); */
+        setUser({ flow: "signup", email }); // Set both flow and email on sign up
+        localStorage.setItem("user", JSON.stringify({ flow: "signup", email })); // Persist user data in localStorage
+        displayAlert("success", "Verification Code is sent succefully");
+        navigate("/verifyotp");
+      } else {
+        setCredential({ email: "", password: "", name: "", cpassword: "" });
+        displayAlert("danger", "Sorry a user with this email already exists");
+      }
+    } catch (error) {
+      displayAlert("danger", error);
     }
-  };
+    };
   const ochange = (e) => {
     setCredential({ ...credential, [e.target.name]: e.target.value });
   };

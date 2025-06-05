@@ -3,17 +3,24 @@ import React, {useEffect} from "react";
 import AlertState from '../alerts/AlertState';
 import NoteContext from './NoteContext'
 import { useState } from 'react'
+import AuthState from "../authentication/AuthState";
 
 
 export const NoteState = (props) => {
-  const port = process.env.REACT_APP_URL;
-  const host = `${port}`;
+  
+  const host = process.env.REACT_APP_URL;
     const noteIntialize = []
     const [notes, setNotes] = useState(noteIntialize);
     const [user, setUser] = useState(() => {
       const storedUser = localStorage.getItem('user');
-      return storedUser ? JSON.parse(storedUser) : { name: "", email: "" }; // Initialize with localStorage data if available
+      return storedUser ? JSON.parse(storedUser) : { flow: "", email: "", name: " " }; // Initialize with localStorage data if available
     });
+    useEffect(() => {
+  const storedUser = localStorage.getItem("user");
+  if (storedUser) {
+    setUser(JSON.parse(storedUser));
+  }
+}, []);
     useEffect(() => {
       if (user) {
         localStorage.setItem('user', JSON.stringify(user));
@@ -122,12 +129,14 @@ const editNote = async (id, title, description, tag)=>{
   }
 }
   return (
+    <AuthState >
     <AlertState>
 
     <NoteContext.Provider value={{notes, user, setUser,addNote, deleteNote,editNote, getNotes}}>
         {props.children}
     </NoteContext.Provider>
     </AlertState>
+    </AuthState>
    
   )
 }
