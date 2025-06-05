@@ -15,9 +15,7 @@ function ForgetPassword() {
   
   const [credential, setCredential] = useState({
     email: "",
-    password: "",
-    currentPassword: "",
-    cpassword: "",
+    
   });
   
   const flow = "forgetpw";
@@ -31,18 +29,15 @@ function ForgetPassword() {
 
     try {
       
-      const json = ForgetPassword(email)
+      const json = await ForgetPassword(email)
       
-      if (!json.success) {
-        
-        return displayAlert("danger", json.message);
-      }
-      displayAlert("success", "OTP sent to your email.");
+      
+      displayAlert("success", json.message);
       setUser({ email, flow: flow }); // Set both name and email on sign up
       localStorage.setItem("user", JSON.stringify({ email, flow: flow}));
       navigate("/verifyotp");
     } catch (error) {
-      displayAlert("danger", error);
+      displayAlert("danger", error.message);
       // console.error("Errer fetching ", error);
     }
   };

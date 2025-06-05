@@ -39,7 +39,7 @@ function ResetPassword() {
       return; // Stop further execution if passwords don't match
     }
     try {
-      const json = ResetPassword(email, password);
+      const json = await ResetPassword(email, password);
 
       if (!json.success) {
         return displayAlert("danger", "incorreect current pw");

@@ -23,32 +23,37 @@ export default function Login() {
    const  { email,password} = credential;
    try {
     
-     const json = Login(email, password);
+     const json = await Login(email, password);
      
      
      
      /* console.log(json); */
-     if(json.success){
+     
        // Save the auth token and redirect
        localStorage.setItem('token', json.token);
        
-       
-       const userData = await GetUser();  // 🟢 Fetch full user info using token
-       
-       if (userData) {
-         setUser({ name: userData.name, email: userData.email });
-         localStorage.setItem('user', JSON.stringify({ name: userData.name, email: userData.email }));
+       try {
+        
+         const userData = await GetUser();  // 🟢 Fetch full user info using token
+         
+         if (userData) {
+           setUser({ name: userData.name, email: userData.email });
+           localStorage.setItem('user', JSON.stringify({ name: userData.name, email: userData.email }));
+          }
+          displayAlert("success","Login successful");
+        navigate("/");
+        
+        } catch (error) {
+          displayAlert("danger", error.message);
+         
         }
         
         
-        displayAlert("success","Login successful");
-        navigate("/");
-      }else{
-        setCredential({email , password: ""});
-        displayAlert("danger",json.message);
-      }
+      
     } catch (error) {
-     displayAlert("danger", error);
+      setCredential({email , password: ""});
+     displayAlert("danger", error.message);
+     console.log(error.message)
     }
     
   

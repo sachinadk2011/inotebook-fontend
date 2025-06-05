@@ -22,18 +22,20 @@ function Navbar() {
   const handleDelete = async() => {
     try {
       
-      const json = DeleteUser()
-     if (json.success){
+      const json = await DeleteUser()
+     console.log(json.message);
     displayAlert("success", json.message);
+    //  Clear localStorage and redirect to login/home
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     navigate("/login");
-     }else{
-      displayAlert("danger",json.message)
-     }
+    
 
       
     } catch (error) {
       // console.error('Error:', error.message);
-      displayAlert("danger", error);
+      displayAlert("danger", error.message);
+      navigate("/login");
       
     }
 

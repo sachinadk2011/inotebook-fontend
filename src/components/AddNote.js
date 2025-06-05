@@ -9,9 +9,9 @@ export default function AddNote() {
   const { displayAlert, clearAlert } = alertContext;
   const [note, setNote] = useState({ title: "", description: "", tag: "" });
 
-  const addingNotes = (e) => {
+  const addingNotes = async(e) => {
     e.preventDefault();
-    addNote(note.title, note.description, note.tag);
+    await addNote(note.title, note.description, note.tag);
     displayAlert("success", "Note added successfully");
 
     setNote({ title: "", description: "", tag: "" });

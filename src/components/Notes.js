@@ -18,11 +18,21 @@ export default function Notes() {
     setNote({...note, [e.target.name]:e.target.value });
   }
   useEffect(() => {
-    if(localStorage.getItem('token')){
-    getNotes();
-  }else{
-    navigate('/login')
-  }
+    const fetchNotes = async () => {
+    try {
+      if (localStorage.getItem('token')) {
+        await getNotes();
+      } else {
+        navigate('/login');
+      }
+    } catch (err) {
+      // Show friendly error message or set error state with string message
+      console.error(err);
+      // setError(err.message || 'Something went wrong');
+    }
+  };
+
+  fetchNotes();
     // eslint-disable-next-line
   }, []);
 
@@ -38,8 +48,8 @@ export default function Notes() {
       });
   };
 
-  const handleUpdate = ()=>{
-    editNote(note.id, note.title, note.description, note.tag);
+  const handleUpdate = async()=>{
+    await editNote(note.id, note.title, note.description, note.tag);
     refClose.current.click();
     displayAlert("success","Note updated successfully" )
   }

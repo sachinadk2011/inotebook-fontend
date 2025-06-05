@@ -30,7 +30,7 @@ export default function SignUp() {
     }
     try {
       
-      const json = SignUp(name, email, password);
+      const json = await SignUp(name, email, password);
       if (json.success) {
         // Save the auth token and redirect
         /* localStorage.setItem('token', json.token); */
@@ -44,7 +44,7 @@ export default function SignUp() {
         displayAlert("danger", "Sorry a user with this email already exists");
       }
     } catch (error) {
-      displayAlert("danger", error);
+      displayAlert("danger", error.message);
     }
     };
   const ochange = (e) => {

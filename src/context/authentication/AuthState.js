@@ -16,9 +16,16 @@ export default function AuthState(props) {
     const json = await response.json();
 
     if (!response.ok) {
+      let message = json.error || json.message || "Failed to create user";
       // Handle errors from the backend
-      displayAlert("danger", `HTTP Error: ${json.status}`);
-      throw new Error(json.error || "Failed to create user");
+      const time = json.retryAfter;
+      if (typeof time === "number" && !isNaN(time)) {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        message += `Try again in ${minutes} minute(s) and ${seconds} second(s).`;
+      }
+      // console.log(time, typeof time)
+      throw new Error(message);
     }
 
     return json;
@@ -36,9 +43,16 @@ export default function AuthState(props) {
     });
     const json = await response.json();
     if (!response.ok) {
+      let message = json.error || json.message || "Failed to create user";
       // Handle errors from the backend
-      displayAlert("danger", `HTTP Error: ${json.status}`);
-      throw new Error(json.error || "Failed to create user");
+      const time = json.retryAfter;
+      if (typeof time === "number" && !isNaN(time)) {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        message += `Try again in ${minutes} minute(s) and ${seconds} second(s).`;
+      }
+      // console.log(time, typeof time)
+      throw new Error(message);
     }
     return json;
   };
@@ -54,6 +68,18 @@ export default function AuthState(props) {
       body: JSON.stringify({ email: email }),
     });
     const json = await response.json();
+    if (!response.ok) {
+      let message = json.error || json.message || "Failed to create user";
+      // Handle errors from the backend
+      const time = json.retryAfter;
+      if (typeof time === "number" && !isNaN(time)) {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        message += `Try again in ${minutes} minute(s) and ${seconds} second(s).`;
+      }
+      // console.log(time, typeof time)
+      throw new Error(message);
+    }
     return json;
   };
   // login the user
@@ -67,12 +93,19 @@ export default function AuthState(props) {
       body: JSON.stringify({ email, password }),
     });
     const json = await response.json();
-    if (!response.ok) {
-      // Handle errors from the backend
-      displayAlert("danger", `HTTP Error: ${json.status}`);
-      throw new Error(json.error || "Failed to create user");
-    }
 
+    if (!response.ok) {
+      let message = json.error || json.message || "Failed to create user";
+      // Handle errors from the backend
+      const time = json.retryAfter;
+      if (typeof time === "number" && !isNaN(time)) {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        message += `Try again in ${minutes} minute(s) and ${seconds} second(s).`;
+      }
+      // console.log(time, typeof time)
+      throw new Error(message);
+    }
     return json;
   };
 
@@ -89,15 +122,10 @@ export default function AuthState(props) {
     const json = await response.json();
 
     if (!response.ok || !json) {
-      return null;
-    }
-    if (json.success) {
-      return json.user;
-    } else {
-      return null;
+      throw new Error(json.message || "error on geting user data");
     }
 
-    return json;
+    return json.user;
   };
 
   // forget password
@@ -113,6 +141,18 @@ export default function AuthState(props) {
     // Debugging
 
     const json = await response.json();
+    if (!response.ok) {
+      let message = json.error || json.message || "Failed to create user";
+      // Handle errors from the backend
+      const time = json.retryAfter;
+      if (typeof time === "number" && !isNaN(time)) {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        message += `Try again in ${minutes} minute(s) and ${seconds} second(s).`;
+      }
+      // console.log(time, typeof time)
+      throw new Error(message);
+    }
     return json;
   };
 
@@ -135,13 +175,21 @@ export default function AuthState(props) {
         "auth-token": localStorage.getItem("token"),
       },
     });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
     const json = await response.json();
-    //  Clear localStorage and redirect to login/home
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    if (!response.ok) {
+      let message = json.error || json.message || "Failed to create user";
+      // Handle errors from the backend
+      const time = json.retryAfter;
+      if (typeof time === "number" && !isNaN(time)) {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        message += `Try again in ${minutes} minute(s) and ${seconds} second(s).`;
+      }
+      // console.log(time, typeof time)
+      throw new Error(message);
+    }
+
+    return json;
   };
 
   return (

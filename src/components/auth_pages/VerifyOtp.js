@@ -34,11 +34,7 @@ export default function VerifyOtp() {
         // Handle errors from the backend
         throw new Error(json.error || "Failed to create user");
         }  */
-       if(json.message === "OTP has expired") {
-         displayAlert("danger","OTP has expired. Please request new one" );
-         
-        }
-        else if (json.success) {
+       
           // Save the auth token and redirect
           
           /* console.log(json.token); */
@@ -53,14 +49,11 @@ export default function VerifyOtp() {
           // Clear the flow afterward, keeping only the email
           setUser({ email });
           
-          displayAlert("success", "Email Verification is successful" );
-        } 
-        else{
-          setOtp({OtpCode : ""});
-          displayAlert("danger","Invalid Otp " );
-        }
+          displayAlert("success", json.message );
+        
       } catch (error) {
-        displayAlert("danger", error);
+        setOtp({OtpCode : ""});
+        displayAlert("danger", error.message);
       }
   
   };

@@ -19,47 +19,64 @@ import ResetPassword from './components/auth_pages/ResetPassword';
 import NoteContext from './context/notes/NoteContext';
 import { useContext } from 'react';
 import AuthContext from './context/authentication/AuthContext';
+import AlertContext from './context/alerts/AlertContext';
 
 
-
-function App() {
-  const { setUser } = useContext(NoteContext); // ⛔️ This only works if wrapped in <NoteState>
-  const {GetUser} = useContext(AuthContext)
-  const navigate  = useNavigate();
+// ✅ This component is inside the Router and NoteState Providers
+function AppContent() {
+  const {  setUser } = useContext(NoteContext);
+  const { GetUser } = useContext(AuthContext);
+  const { displayAlert } = useContext(AlertContext)
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const checkUser = async () => {
-      if (localStorage.getItem("token")) {
-        const user = await GetUser(); // 👉 fetches full user
-        if (user) setUser({ name: user.name, email: user.email });
-        else{
-          localStorage.removeItem("token");
-          navigate("/login");
-        }
+  const checkUser = async () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const userData = await GetUser();
+        
+          setUser({ name: userData.name, email: userData.email });
+        
+      } catch (error){
+        localStorage.removeItem('token');
+        displayAlert("danger", error.message)
+        navigate('/login');
       }
-    };
-    checkUser();
-  }, []);
+    } else {
+      navigate('/login');
+    }
+  };
+  checkUser();
+  // eslint-disable-next-line
+}, []);
+
+
+  return (
+    <>
+      <Navbar />
+      <Alert />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signUp" element={<SignUp />} />
+        <Route path="/verifyotp" element={<VerifyOtp />} />
+        <Route path="/forgetpw" element={<ForgetPassword />} />
+        <Route path="/resetpw" element={<ResetPassword />} />
+      </Routes>
+    </>
+  );
+}
+function App() {
+  
 
 
   return (
     <>
     <NoteState>
     <Router>
-    <Navbar />
-    <Alert />
-   <Routes >
-
-        <Route exact path="/" element={ <Home />} />   
-        <Route exact path="/about" element={<About  />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/signUp" element={<SignUp />} />
-        <Route exact path="/verifyotp" element={<VerifyOtp />} />
-        <Route exact path="/forgetpw" element={<ForgetPassword />} />
-        <Route exact path="/resetpw" element={<ResetPassword />} />
-        
-
-      </Routes>  
+    <AppContent />
       
     </Router>
     </NoteState>
