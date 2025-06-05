@@ -31,19 +31,17 @@ export default function SignUp() {
     try {
       
       const json = await SignUp(name, email, password);
-      if (json.success) {
+      
         // Save the auth token and redirect
         /* localStorage.setItem('token', json.token); */
         /* console.log(json.token); */
         setUser({ flow: "signup", email }); // Set both flow and email on sign up
         localStorage.setItem("user", JSON.stringify({ flow: "signup", email })); // Persist user data in localStorage
-        displayAlert("success", "Verification Code is sent succefully");
+        displayAlert("success", json.message);
         navigate("/verifyotp");
-      } else {
-        setCredential({ email: "", password: "", name: "", cpassword: "" });
-        displayAlert("danger", "Sorry a user with this email already exists");
-      }
+      
     } catch (error) {
+      setCredential({ email: "", password: "", name: "", cpassword: "" });
       displayAlert("danger", error.message);
     }
     };

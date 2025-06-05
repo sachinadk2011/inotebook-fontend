@@ -63,7 +63,7 @@ export default function VerifyOtp() {
     const json =await ResendOtp(email)
      
     
-      displayAlert("success", json.message || "verification code sent successfully");
+      displayAlert("success", json.message );
     
      } catch (error) {
         

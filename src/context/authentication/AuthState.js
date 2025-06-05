@@ -43,7 +43,7 @@ export default function AuthState(props) {
     });
     const json = await response.json();
     if (!response.ok) {
-      let message = json.error || json.message || "Failed to create user";
+      let message = json.error || json.message || "Failed to verify email";
       // Handle errors from the backend
       const time = json.retryAfter;
       if (typeof time === "number" && !isNaN(time)) {
@@ -69,7 +69,7 @@ export default function AuthState(props) {
     });
     const json = await response.json();
     if (!response.ok) {
-      let message = json.error || json.message || "Failed to create user";
+      let message = json.error || json.message || "Failed to send opt code to an email";
       // Handle errors from the backend
       const time = json.retryAfter;
       if (typeof time === "number" && !isNaN(time)) {
@@ -95,7 +95,7 @@ export default function AuthState(props) {
     const json = await response.json();
 
     if (!response.ok) {
-      let message = json.error || json.message || "Failed to create user";
+      let message = json.error || json.message || "Failed to login user";
       // Handle errors from the backend
       const time = json.retryAfter;
       if (typeof time === "number" && !isNaN(time)) {
@@ -142,7 +142,7 @@ export default function AuthState(props) {
 
     const json = await response.json();
     if (!response.ok) {
-      let message = json.error || json.message || "Failed to create user";
+      let message = json.error || json.message || "Failed to find user email";
       // Handle errors from the backend
       const time = json.retryAfter;
       if (typeof time === "number" && !isNaN(time)) {
@@ -164,6 +164,19 @@ export default function AuthState(props) {
       body: JSON.stringify({ email, password }),
     });
     const json = await response.json();
+
+    if (!response.ok) {
+      let message = json.error || json.message || "Failed to update password";
+      // Handle errors from the backend
+      const time = json.retryAfter;
+      if (typeof time === "number" && !isNaN(time)) {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        message += `Try again in ${minutes} minute(s) and ${seconds} second(s).`;
+      }
+      // console.log(time, typeof time)
+      throw new Error(message);
+    }
     return json;
   };
 
@@ -177,7 +190,7 @@ export default function AuthState(props) {
     });
     const json = await response.json();
     if (!response.ok) {
-      let message = json.error || json.message || "Failed to create user";
+      let message = json.error || json.message || "Failed to delete user";
       // Handle errors from the backend
       const time = json.retryAfter;
       if (typeof time === "number" && !isNaN(time)) {

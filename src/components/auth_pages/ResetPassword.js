@@ -41,17 +41,15 @@ function ResetPassword() {
     try {
       const json = await ResetPassword(email, password);
 
-      if (!json.success) {
-        return displayAlert("danger", "incorreect current pw");
-      }
+      
 
-      displayAlert("success", "Password updated successfully.");
+      displayAlert("success", json.message);
 
       setUser({ flow: "" });
       localStorage.removeItem("user");
       navigate("/login");
     } catch (error) {
-      displayAlert("danger", "Failed to update password. Try again later.");
+      displayAlert("danger", error.message);
     }
   };
 
