@@ -23,7 +23,7 @@ function Navbar() {
     try {
       
       const json = await DeleteUser()
-     console.log(json.message);
+     
     displayAlert("success", json.message);
     //  Clear localStorage and redirect to login/home
     localStorage.removeItem("token");
