@@ -53,7 +53,7 @@ export default function Login() {
     } catch (error) {
       setCredential({email , password: ""});
      displayAlert("danger", error.message);
-     console.log(error.message)
+     
     }
     
   
