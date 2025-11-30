@@ -1,72 +1,69 @@
-# Getting Started with Create React App
+# iNotebook - Note Taking App (Frontend)
 
-live demo: https://inotebook-i04d.onrender.com/login
+A **React-based note-taking application** frontend where users can create, edit, and manage their notes efficiently. This project demonstrates React components, state management, routing, and integration with a backend (Node.js + MongoDB).
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 🚀 Live Demo
 
-## Available Scripts
+Check it out here: [iNotebook](https://inotebook-i04d.onrender.com/)
 
-In the project directory, you can run:
+## 🛠 Features
 
-### `npm start`
+- Create, edit, and delete notes
+- Real-time note updates
+- User authentication (Login/Signup)
+- Dark/Light mode toggle
+- Responsive design for mobile and desktop
+- Alerts for user actions
+- Built with **React 18**, **React Router DOM**, and **Context API**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 📂 Folder Structure
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```text
+inotebook-frontend/
+├── public/                     # Static assets like index.html, favicon, etc.
+├── src/
+│   ├── components/             # Reusable components like Navbar, NotesItem, NoteForm, Alert
+│   ├── context/                # Context API setup for users, messages, and friends
+│   ├── pages/                  # Pages like ChatRoom, Friends, Suggestions
+│   ├── App.js                  # Main app component
+│   └── index.js                # Entry point of the React app
+├── package.json                # Project metadata & dependencies
+├── README.md                   # Project README file
+└── .gitignore                  # Git ignore file
+```
 
-### `npm test`
+⚡ Technologies Used
+- React 18 – For building the user interface
+- React Router DOM – For routing between pages
+- Context API – State management
+- CSS / Tailwind – Styling
+- Axios – For API requests
+- GitHub Pages / Vercel / Render – For deployment
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🔧 Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/inotebook-frontend.git
+    cd inotebook-frontend
+    ```
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
+3. Start the development server:
+    ```bash
+    npm start
+    ```
+4. Open your browser and navigate to `http://localhost:3000`
 
-### `npm run build`
+### 📖 Usage
+- Sign up or log in to access your notes.
+- Add new notes using the input form.
+- Edit or delete notes using the respective buttons.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 🤝 Contributing
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Contributions are welcome! Open an issue or submit a pull request for improvements or bug fixes.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 📄 License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
