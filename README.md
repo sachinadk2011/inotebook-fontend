@@ -54,6 +54,11 @@ inotebook-frontend/
     ```bash
     npm start
     ```
+    **Or**
+    To run both frontend and backend concurrently (if backend is set up) on inotebook-frontend directory:
+    ```bash
+    npm run both
+    ```
 4. Open your browser and navigate to `http://localhost:3000`
 
 ### 📖 Usage
