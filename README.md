@@ -69,6 +69,3 @@ inotebook-frontend/
 ### 🤝 Contributing
 
 Contributions are welcome! Open an issue or submit a pull request for improvements or bug fixes.
-
-### 📄 License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
